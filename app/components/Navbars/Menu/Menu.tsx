@@ -12,7 +12,7 @@ export default function Menu() {
     let { data: category, error } = await client.from("category").select("*");
 
     setCategories(category.filter((cat) => cat.created_by !== null));
-    setCollection(category?.find((cat) => cat.name === "New"));
+    setCollection(category?.find((cat) => cat.name === "New Collections"));
     setPrive(category?.find((cat) => cat.name === "Prive"));
   };
 
