@@ -13,6 +13,7 @@ import {
   faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
+import Category from "./components/Category/Category";
 
 export default function Home() {
   return (
@@ -422,83 +423,8 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="categories overflow-hidden">
-        <div className="container">
-          <div className="open-up" data-aos="zoom-out">
-            <div className="row">
-              <div className="col-md-4">
-                <div className="cat-item image-zoom-effect">
-                  <div className="image-holder">
-                    <a href="/tops">
-                      <img
-                        src="images/product-item-10.jpg"
-                        alt="categories"
-                        className="product-image img-fluid"
-                      />
-                    </a>
-                  </div>
-                  <div className="category-content">
-                    <div className="product-button">
-                      {/* <a
-                        href="index.html"
-                        className="btn btn-common text-uppercase"
-                      > */}
-                      Tops
-                      {/* </a> */}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="cat-item image-zoom-effect">
-                  <div className="image-holder">
-                    <a href="/bottoms">
-                      <img
-                        src="images/product-item-3.jpg"
-                        alt="categories"
-                        className="product-image img-fluid"
-                      />
-                    </a>
-                  </div>
-                  <div className="category-content">
-                    <div className="product-button">
-                      {/* <a
-                        href="index.html"
-                        className="btn btn-common text-uppercase"
-                      > */}
-                      Bottoms
-                      {/* </a> */}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="cat-item image-zoom-effect">
-                  <div className="image-holder">
-                    <a href="/dresses">
-                      <img
-                        src="images/product-item-5.jpg"
-                        alt="categories"
-                        className="product-image img-fluid"
-                      />
-                    </a>
-                  </div>
-                  <div className="category-content">
-                    <div className="product-button">
-                      {/* <a
-                        href="index.html"
-                        className="btn btn-common text-uppercase"
-                      > */}
-                      Dress
-                      {/* </a> */}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+
+      <Category />
 
       {/* <section
         id="new-arrival"

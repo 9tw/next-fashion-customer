@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import Menu from "./Menu/Menu";
+import Cart from "./Cart/Cart";
 
 export default function Navbar() {
   return (
@@ -84,48 +85,7 @@ export default function Navbar() {
           />
         </div>
         <div className="offcanvas-body">
-          <div className="order-md-last">
-            <h4 className="d-flex justify-content-between align-items-center mb-3">
-              <span className="text-primary">Your cart</span>
-              <span className="badge bg-primary rounded-pill">3</span>
-            </h4>
-            <ul className="list-group mb-3">
-              <li className="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                  <h6 className="my-0">Growers cider</h6>
-                  <small className="text-body-secondary">
-                    Brief description
-                  </small>
-                </div>
-                <span className="text-body-secondary">$12</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                  <h6 className="my-0">Fresh grapes</h6>
-                  <small className="text-body-secondary">
-                    Brief description
-                  </small>
-                </div>
-                <span className="text-body-secondary">$8</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                  <h6 className="my-0">Heinz tomato ketchup</h6>
-                  <small className="text-body-secondary">
-                    Brief description
-                  </small>
-                </div>
-                <span className="text-body-secondary">$5</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between">
-                <span>Total (USD)</span>
-                <strong>$20</strong>
-              </li>
-            </ul>
-            <button className="w-100 btn btn-primary btn-lg" type="submit">
-              Continue to Checkout
-            </button>
-          </div>
+          <Cart />
         </div>
       </div>
       <nav className="navbar navbar-expand-lg bg-light text-uppercase fs-6 p-3 border-bottom align-items-center">
@@ -151,7 +111,15 @@ export default function Navbar() {
                   <a href="index.html" className="text-uppercase mx-3">
                     Wishlist <span className="wishlist-count">(0)</span>
                   </a>
-                </li>
+                </li> */}
+
+                {/* <li className="d-lg-none">
+                  <a href="#" className="mx-2">
+                    <div style={{ width: 24, height: 24 }}>
+                      <FontAwesomeIcon icon={faHeartRegular} size="sm" />
+                    </div>
+                  </a>
+                </li> */}
                 <li className="d-none d-lg-block">
                   <a
                     href="index.html"
@@ -160,14 +128,7 @@ export default function Navbar() {
                     data-bs-target="#offcanvasCart"
                     aria-controls="offcanvasCart"
                   >
-                    Cart <span className="cart-count">(0)</span>
-                  </a>
-                </li>
-                <li className="d-lg-none">
-                  <a href="#" className="mx-2">
-                    <div style={{ width: 24, height: 24 }}>
-                      <FontAwesomeIcon icon={faHeartRegular} size="sm" />
-                    </div>
+                    Cart {/* <span className="cart-count">(0)</span> */}
                   </a>
                 </li>
                 <li className="d-lg-none">
@@ -182,7 +143,7 @@ export default function Navbar() {
                       <FontAwesomeIcon icon={faCartShopping} size="sm" />
                     </div>
                   </a>
-                </li> */}
+                </li>
                 <li className="search-box">
                   <a href="/login" className="text-uppercase mx-3">
                     Login

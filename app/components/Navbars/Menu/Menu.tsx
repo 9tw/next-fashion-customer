@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import client from "@/app/api/client";
+import client from "@/app/api/supabase/client";
 
 export default function Menu() {
   const [categories, setCategories] = useState<any[]>([]);
