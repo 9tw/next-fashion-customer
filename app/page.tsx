@@ -302,7 +302,7 @@ export default function Home() {
             </div>
             <div className="icon-arrow icon-arrow-left">
               <div style={{ width: 24, height: "65%" }}>
-                <FontAwesomeIcon icon={faArrowLeft} size="10x" />
+                <FontAwesomeIcon icon={faArrowLeft} size="sm" />
               </div>
             </div>
             <div className="icon-arrow icon-arrow-right">

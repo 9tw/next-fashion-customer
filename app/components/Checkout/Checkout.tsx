@@ -91,10 +91,10 @@ export default function Checkout() {
             style={{ marginBottom: "15px" }}
           >
             <div>
-              <h4 className="my-0">
+              <h5 className="my-0">
                 {cart?.name} {cart?.quantity}X
-              </h4>
-              <big className="text-body-secondary">Size: {cart?.size}</big>
+              </h5>
+              <small className="text-body-secondary">Size: {cart?.size}</small>
             </div>
             <big className="text-body-secondary">
               Rp. {formatPrice(cart?.price)},-
