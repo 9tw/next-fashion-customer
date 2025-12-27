@@ -5,6 +5,7 @@ import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import { useEffect, useState } from "react";
 import client from "@/app/api/supabase/client";
 import { useSearchParams } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 export default function Showcase() {
   const searchParams = useSearchParams();
@@ -33,7 +34,7 @@ export default function Showcase() {
       .from("size")
       .select("*")
       .eq("product_id", product?.id);
-    console.log(size);
+
     setSizes(size || []);
   };
 
@@ -58,6 +59,8 @@ export default function Showcase() {
 
     cart.push(newProduct);
     localStorage.setItem("cart", JSON.stringify(cart));
+
+    toast.success(`${product?.name} Dress added to your cart`);
   };
 
   useEffect(() => {

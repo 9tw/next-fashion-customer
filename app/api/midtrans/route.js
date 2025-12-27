@@ -11,7 +11,7 @@ export async function POST(request) {
 
   let parameter = {
     transaction_details: {
-      order_id: "fashion-123",
+      order_id: "fashion-888",
       gross_amount: total,
     },
     // item_details: {

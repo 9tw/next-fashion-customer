@@ -42,7 +42,7 @@ export default function Checkout() {
 
     let total = 0;
     cart?.map((c: any) => {
-      total += c?.price;
+      total += c?.quantity * c?.price;
     });
     setTotals(total);
   }, []);
@@ -97,7 +97,7 @@ export default function Checkout() {
               <small className="text-body-secondary">Size: {cart?.size}</small>
             </div>
             <big className="text-body-secondary">
-              Rp. {formatPrice(cart?.price)},-
+              Rp. {formatPrice(cart?.quantity * cart?.price)},-
             </big>
           </li>
         ))}
