@@ -7,11 +7,11 @@ let snap = new Midtrans.Snap({
 });
 
 export async function POST(request) {
-  const { total } = await request.json();
+  const { id, total } = await request.json();
 
   let parameter = {
     transaction_details: {
-      order_id: "fashion-888",
+      order_id: id,
       gross_amount: total,
     },
     // item_details: {

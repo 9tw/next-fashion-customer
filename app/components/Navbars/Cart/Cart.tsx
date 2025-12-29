@@ -15,14 +15,13 @@ export default function Cart() {
   const [trigger, setTrigger] = useState(true);
   const [sizes, setSizes] = useState<any[]>([]);
 
-  const getSizes = async () => {
-    let { data: size, error } = await client.from("size").select("*");
-
-    setSizes(size || []);
-  };
-
   const formatPrice = (price: number) => {
     return price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  };
+
+  const getSizes = async () => {
+    let { data: size, error } = await client.from("size").select("*");
+    setSizes(size || []);
   };
 
   const loadCart = () => {
@@ -43,7 +42,11 @@ export default function Cart() {
       (item: any) => item.id === productId && item.size === size
     );
 
-    if (itemIndex > -1) {
+    const product = sizes.find(
+      (item) => item.product_id === productId && item.name === size
+    );
+
+    if (itemIndex > -1 && cart[itemIndex].quantity < product.qty) {
       cart[itemIndex].quantity += 1;
       localStorage.setItem("cart", JSON.stringify(cart));
     }
@@ -58,13 +61,8 @@ export default function Cart() {
       (item: any) => item.id === productId && item.size === size
     );
 
-    if (itemIndex > -1) {
-      if (cart[itemIndex].quantity > 1) {
-        cart[itemIndex].quantity -= 1;
-      } else {
-        // Remove item if quantity becomes 0
-        cart.splice(itemIndex, 1);
-      }
+    if (itemIndex > -1 && cart[itemIndex].quantity > 1) {
+      cart[itemIndex].quantity -= 1;
       localStorage.setItem("cart", JSON.stringify(cart));
     }
 

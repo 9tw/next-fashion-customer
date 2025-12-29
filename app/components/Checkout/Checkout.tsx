@@ -1,23 +1,36 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import client from "@/app/api/supabase/client";
+import { toast } from "react-hot-toast";
 
 export default function Checkout() {
   const [carts, setCarts] = useState<any[]>([]);
   const [totals, setTotals] = useState<number>();
 
-  const handleCheckout = async () => {
-    const response = await fetch("/api/midtrans", {
-      method: "POST",
-      body: JSON.stringify({ total: totals }),
-    });
-
-    const requestData = await response.json();
-    window.snap.pay(requestData.token);
-  };
-
   const formatPrice = (price: number) => {
     return price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  };
+
+  const handleCheckout = async () => {
+    try {
+      const { data, error } = await client
+        .from("checkout")
+        .insert({ total: totals, status: false })
+        .select();
+
+      if (error) throw error;
+
+      const response = await fetch("/api/midtrans", {
+        method: "POST",
+        body: JSON.stringify({ id: data?.id, total: totals }),
+      });
+
+      const requestData = await response.json();
+      window.snap.pay(requestData.token);
+    } catch (err: any) {
+      toast.error(err.message || "An error occurred");
+    }
   };
 
   useEffect(() => {

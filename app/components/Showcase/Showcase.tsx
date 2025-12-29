@@ -15,6 +15,7 @@ export default function Showcase() {
   const [product, setProduct] = useState<any>();
   const [sizes, setSizes] = useState<any[]>([]);
   const [qty, setQty] = useState(1);
+  const [qtyMax, setMax] = useState(1);
 
   const formatPrice = (price: number) => {
     return price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -36,6 +37,13 @@ export default function Showcase() {
       .eq("product_id", product?.id);
 
     setSizes(size || []);
+  };
+
+  const changeSize = (productId: string, size: string) => {
+    const product = sizes.find(
+      (item) => item.product_id === productId && item.name === size
+    );
+    setMax(product.qty);
   };
 
   const handleSubmit = (e: any) => {
@@ -381,6 +389,7 @@ export default function Showcase() {
                 <select
                   name="size"
                   className="form-control form-control-md"
+                  onChange={(e) => changeSize(product?.id, e.target.value)}
                   required
                 >
                   <option value="">select size</option>
@@ -410,7 +419,7 @@ export default function Showcase() {
                   <button
                     type="button"
                     className="btn btn-outline-secondary btn-md"
-                    onClick={() => setQty(Math.min(5, qty + 1))}
+                    onClick={() => setQty(Math.min(qtyMax, qty + 1))}
                   >
                     +
                   </button>
