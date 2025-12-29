@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Tooltip } from "react-tooltip";
 import client from "@/app/api/supabase/client";
+import { formatPrice } from "@/utils/format";
 
 export default function Cart() {
   const router = useRouter();
@@ -14,10 +15,6 @@ export default function Cart() {
   const [totals, setTotals] = useState<number>();
   const [trigger, setTrigger] = useState(true);
   const [sizes, setSizes] = useState<any[]>([]);
-
-  const formatPrice = (price: number) => {
-    return price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  };
 
   const getSizes = async () => {
     let { data: size, error } = await client.from("size").select("*");
@@ -73,6 +70,7 @@ export default function Cart() {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
     const itemIndex = cart.findIndex((item: any) => item.id === productId);
     cart[itemIndex].size = size;
+    cart[itemIndex].quantity = 1;
     localStorage.setItem("cart", JSON.stringify(cart));
 
     setTrigger(!trigger);
@@ -96,7 +94,7 @@ export default function Cart() {
     const offcanvasElement = document.getElementById("offcanvasCart");
 
     const handleOffcanvasShow = () => {
-      console.log("Offcanvas opened - reloading cart");
+      console.log("OffcanvasCart opened - reloading cart");
       loadCart();
     };
 

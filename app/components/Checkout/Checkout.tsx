@@ -3,14 +3,11 @@
 import { useEffect, useState } from "react";
 import client from "@/app/api/supabase/client";
 import { toast } from "react-hot-toast";
+import { formatPrice } from "@/utils/format";
 
 export default function Checkout() {
   const [carts, setCarts] = useState<any[]>([]);
   const [totals, setTotals] = useState<number>();
-
-  const formatPrice = (price: number) => {
-    return price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  };
 
   const handleCheckout = async () => {
     try {
