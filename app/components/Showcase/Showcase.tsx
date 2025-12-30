@@ -18,8 +18,15 @@ export default function Showcase() {
   const getProducts = async () => {
     let { data: product, error } = await client
       .from("product")
-      .select("*")
-      .eq("category_id", categoryId);
+      .select(
+        `*,
+        photo (
+          id, path
+        )
+        `
+      )
+      .eq("category_id", categoryId)
+      .limit(1, { foreignTable: "photo" });
 
     setProducts(product || []);
   };
@@ -50,7 +57,7 @@ export default function Showcase() {
                 <div className="image-holder position-relative">
                   <a href={"/details?id=" + product?.id}>
                     <img
-                      src="images/product-item-1.jpg"
+                      src={product?.photo[0]?.path}
                       alt="categories"
                       className="product-image img-fluid"
                     />

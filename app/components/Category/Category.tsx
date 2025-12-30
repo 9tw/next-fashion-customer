@@ -31,7 +31,7 @@ export default function Category() {
                     <div className="image-holder">
                       <a href={"/clothing?id=" + category?.id}>
                         <img
-                          src="images/product-item-10.jpg"
+                          src={category?.photo}
                           alt="categories"
                           className="product-image img-fluid"
                         />
