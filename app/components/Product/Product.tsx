@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react";
 import client from "@/app/api/supabase/client";
 import { useSearchParams } from "next/navigation";
-import { toast } from "react-hot-toast";
-import { formatPrice } from "@/utils/format";
 import Add from "../Navbars/Add/Add";
+import { SafeHTML } from "@/utils/format";
 
 export default function Product() {
   const searchParams = useSearchParams();
@@ -330,7 +329,13 @@ export default function Product() {
                 <h3 className="element-title text-uppercase">
                   {product?.name}
                 </h3>
-                <p>{product?.description}</p>
+                {/* <p>{product?.description}</p> */}
+                <div>
+                  <SafeHTML
+                    html={product?.description}
+                    className="product-description"
+                  />
+                </div>
                 <a
                   href="#"
                   className="btn btn-dark text-uppercase mt-3"

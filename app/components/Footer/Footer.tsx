@@ -6,6 +6,7 @@ import {
   faYoutube,
   faPinterest,
 } from "@fortawesome/free-brands-svg-icons";
+import Menu from "./Menu/Menu";
 
 export default function Footer() {
   return (
@@ -13,7 +14,7 @@ export default function Footer() {
       <footer id="footer" className="mt-5">
         <div className="container">
           <div className="row d-flex flex-wrap justify-content-between py-5">
-            <div className="col-md-3 col-sm-6">
+            <div className="col-md-4 col-sm-6">
               <div className="footer-menu footer-menu-001">
                 <div className="footer-intro mb-4">
                   <a href="index.html">
@@ -66,41 +67,8 @@ export default function Footer() {
                 </div>
               </div>
             </div>
-            <div className="col-md-3 col-sm-6">
-              <div className="footer-menu footer-menu-002">
-                <h5 className="widget-title text-uppercase mb-4">
-                  Quick Links
-                </h5>
-                <ul className="menu-list list-unstyled text-uppercase border-animation-left fs-6">
-                  <li className="menu-item">
-                    <a href="index.html" className="item-anchor">
-                      Home
-                    </a>
-                  </li>
-                  <li className="menu-item">
-                    <a href="index.html" className="item-anchor">
-                      About
-                    </a>
-                  </li>
-                  <li className="menu-item">
-                    <a href="blog.html" className="item-anchor">
-                      Services
-                    </a>
-                  </li>
-                  <li className="menu-item">
-                    <a href="styles.html" className="item-anchor">
-                      Single item
-                    </a>
-                  </li>
-                  <li className="menu-item">
-                    <a href="#" className="item-anchor">
-                      Contact
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="col-md-3 col-sm-6">
+            <Menu />
+            {/* <div className="col-md-3 col-sm-6">
               <div className="footer-menu footer-menu-003">
                 <h5 className="widget-title text-uppercase mb-4">
                   Help &amp; Info
@@ -138,7 +106,7 @@ export default function Footer() {
                   </li>
                 </ul>
               </div>
-            </div>
+            </div> */}
             <div className="col-md-3 col-sm-6">
               <div className="footer-menu footer-menu-004 border-animation-left">
                 <h5 className="widget-title text-uppercase mb-4">Contact Us</h5>
@@ -164,28 +132,43 @@ export default function Footer() {
         <div className="border-top py-4">
           <div className="container">
             <div className="row">
-              <div className="col-md-6 d-flex flex-wrap">
+              <div className="col-md-6 flex-wrap">
                 <div className="shipping">
-                  <span>We ship with:</span>
-                  <img src="images/arct-icon.png" alt="icon" />
-                  <img src="images/dhl-logo.png" alt="icon" />
+                  <span>We ship with: </span>
+                  {/* <img src="images/arct-icon.png" alt="icon" />
+                  <img src="images/dhl-logo.png" alt="icon" /> */}
                 </div>
                 <div className="payment-option">
-                  <span>Payment Option:</span>
-                  <img src="images/visa-card.png" alt="card" />
+                  <span>Payment By: </span>
+                  <img
+                    style={{ width: "15%" }}
+                    src="images/Midtrans.png"
+                    alt="card"
+                  />
+                  {/* <img src="images/visa-card.png" alt="card" />
                   <img src="images/paypal-card.png" alt="card" />
-                  <img src="images/master-card.png" alt="card" />
+                  <img src="images/master-card.png" alt="card" /> */}
                 </div>
               </div>
               <div className="col-md-6 text-end">
-                <p>
-                  © Copyright 2022 Kaira. All rights reserved. Design by{" "}
+                <p className="mb-0">
+                  Copyright © {1900 + new Date().getYear()} All rights reserved
+                  {/* Design by{" "}
                   <a href="https://templatesjungle.com" target="_blank">
                     TemplatesJungle
                   </a>{" "}
                   Distribution By{" "}
                   <a href="https://themewagon.com" target="blank">
                     ThemeWagon
+                  </a> */}
+                </p>
+                <p>
+                  Powered by{" "}
+                  <a
+                    href="https://www.instagram.com/casually_digital_life/"
+                    target="_blank"
+                  >
+                    Casually Digital Life
                   </a>
                 </p>
               </div>
