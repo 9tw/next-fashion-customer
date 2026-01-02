@@ -16,7 +16,14 @@ export default function Profile() {
     const {
       data: { user },
     } = await client.auth.getUser();
-    setUser(user);
+
+    const { data: profile, error } = await client
+      .from("profile")
+      .select("*")
+      .eq("id", user?.id)
+      .single();
+
+    setUser(profile);
   };
 
   const handleLogOut = async () => {
