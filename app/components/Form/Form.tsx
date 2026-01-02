@@ -90,7 +90,6 @@ export default function Form({ type }: any) {
         setPassword("");
         setVerifyPassword("");
         router.push("/");
-        router.refresh();
       }
     }
   };
