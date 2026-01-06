@@ -37,14 +37,6 @@ export default function Product() {
   const [isZoomed, setIsZoomed] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  // Sample product images - replace with your actual images
-  //   const images = [
-  //     "images/product-item-1.jpg",
-  //     "images/product-item-2.jpg",
-  //     "images/product-item-3.jpg",
-  //     "images/product-item-4.jpg",
-  //   ];
-
   const goToPrevious = () => {
     setCurrentIndex((prev) => (prev === 0 ? photos?.length - 1 : prev - 1));
     setIsZoomed(false);

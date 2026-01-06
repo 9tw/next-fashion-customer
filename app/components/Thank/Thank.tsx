@@ -31,6 +31,17 @@ export default function Thank() {
     const { error } = await client.from("cart").insert(carts).select();
 
     if (error) throw error;
+
+    const { error: errorCheckout } = await client
+      .from("checkout")
+      .update({
+        status: true,
+        updated_at: new Date(),
+      })
+      .eq("id", orderId)
+      .select();
+
+    if (errorCheckout) throw errorCheckout;
   };
 
   useEffect(() => {
