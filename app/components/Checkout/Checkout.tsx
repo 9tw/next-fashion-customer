@@ -140,6 +140,10 @@ export default function Checkout() {
       setPostalError(ship?.postal ? false : true);
       setShippingError(ship?.courier != 0 ? false : true);
 
+      const {
+        data: { user },
+      } = await client.auth.getUser();
+
       const shipping = JSON.parse(localStorage.getItem("shipping") || "[]");
 
       const newShipping = {
@@ -157,7 +161,11 @@ export default function Checkout() {
       try {
         const { data, error } = await client
           .from("checkout")
-          .insert({ total: ongkir, status: false })
+          .insert({
+            total: ongkir,
+            user_id: user ? user?.id : null,
+            status: false,
+          })
           .select();
 
         if (error) throw error;

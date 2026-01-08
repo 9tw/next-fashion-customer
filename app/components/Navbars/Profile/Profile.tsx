@@ -56,7 +56,7 @@ export default function Profile() {
                 </li> */}
           <li className="d-none d-lg-block">
             <a
-              href="index.html"
+              href="#"
               className="text-uppercase mx-3"
               data-bs-toggle="offcanvas"
               data-bs-target="#offcanvasCart"
@@ -65,6 +65,13 @@ export default function Profile() {
               Cart {/* <span className="cart-count">(0)</span> */}
             </a>
           </li>
+          {user ? (
+            <li className="d-none d-lg-block">
+              <a href="/history" className="text-uppercase mx-3">
+                Purchase
+              </a>
+            </li>
+          ) : null}
           <li className="d-lg-none">
             <a
               href="#"

@@ -8,46 +8,7 @@ export default function Thank() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("order_id");
 
-  const updateProductData = async () => {
-    const cart = JSON.parse(localStorage.getItem("cart"));
-
-    try {
-      for (const item of cart) {
-        const { error } = await client.rpc("reduce_stock", {
-          p_product_id: item.id,
-          p_size: item.size,
-          p_quantity: item.quantity,
-        });
-
-        if (error) throw error;
-      }
-
-      const carts = cart?.map((item: any) => ({
-        checkout_id: orderId,
-        product_id: item.id,
-        size: item.size,
-        qty: item.quantity,
-      }));
-
-      const { error } = await client.from("cart").insert(carts).select();
-
-      if (error) throw error;
-
-      const { error: errorCheckout } = await client
-        .from("checkout")
-        .update({
-          status: true,
-          updated_at: new Date(),
-        })
-        .eq("id", orderId)
-        .select();
-
-      if (errorCheckout) throw errorCheckout;
-    } catch (error) {
-      console.error("Error:", error);
-    } finally {
-    }
-  };
+  const [shipId, setShipId] = useState("");
 
   const createOrder = async () => {
     const cart = JSON.parse(localStorage.getItem("cart"));
@@ -96,7 +57,8 @@ export default function Thank() {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Order Success:", data);
+        console.log("Order Success. Order ID:", data?.id);
+        setShipId(data?.id);
       } else {
         console.error("Error:", data.error);
       }
@@ -105,9 +67,51 @@ export default function Thank() {
     }
   };
 
+  const updateProductData = async () => {
+    const cart = JSON.parse(localStorage.getItem("cart"));
+
+    try {
+      for (const item of cart) {
+        const { error } = await client.rpc("reduce_stock", {
+          p_product_id: item.id,
+          p_size: item.size,
+          p_quantity: item.quantity,
+        });
+
+        if (error) throw error;
+      }
+
+      const carts = cart?.map((item: any) => ({
+        checkout_id: orderId,
+        product_id: item.id,
+        size: item.size,
+        qty: item.quantity,
+      }));
+
+      const { error } = await client.from("cart").insert(carts).select();
+
+      if (error) throw error;
+
+      const { error: errorCheckout } = await client
+        .from("checkout")
+        .update({
+          status: true,
+          shipping_id: shipId,
+          updated_at: new Date(),
+        })
+        .eq("id", orderId)
+        .select();
+
+      if (errorCheckout) throw errorCheckout;
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+    }
+  };
+
   useEffect(() => {
-    updateProductData();
     createOrder();
+    updateProductData();
 
     localStorage.removeItem("cart");
     localStorage.removeItem("shipping");
