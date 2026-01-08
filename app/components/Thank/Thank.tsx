@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import client from "@/app/api/supabase/client";
 
@@ -11,42 +11,106 @@ export default function Thank() {
   const updateProductData = async () => {
     const cart = JSON.parse(localStorage.getItem("cart"));
 
-    for (const item of cart) {
-      const { error } = await client.rpc("reduce_stock", {
-        p_product_id: item.id,
-        p_size: item.size,
-        p_quantity: item.quantity,
-      });
+    try {
+      for (const item of cart) {
+        const { error } = await client.rpc("reduce_stock", {
+          p_product_id: item.id,
+          p_size: item.size,
+          p_quantity: item.quantity,
+        });
+
+        if (error) throw error;
+      }
+
+      const carts = cart?.map((item: any) => ({
+        checkout_id: orderId,
+        product_id: item.id,
+        size: item.size,
+        qty: item.quantity,
+      }));
+
+      const { error } = await client.from("cart").insert(carts).select();
 
       if (error) throw error;
+
+      const { error: errorCheckout } = await client
+        .from("checkout")
+        .update({
+          status: true,
+          updated_at: new Date(),
+        })
+        .eq("id", orderId)
+        .select();
+
+      if (errorCheckout) throw errorCheckout;
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
     }
+  };
 
-    const carts = cart.map((item: any) => ({
-      checkout_id: orderId,
-      product_id: item.id,
-      size: item.size,
-      qty: item.quantity,
-    }));
+  const createOrder = async () => {
+    const cart = JSON.parse(localStorage.getItem("cart"));
+    const shipping = JSON.parse(localStorage.getItem("shipping"));
 
-    const { error } = await client.from("cart").insert(carts).select();
-
+    const { data: userData, error } = await client
+      .from("profile")
+      .select("*")
+      .eq("name", "Admin")
+      .single();
     if (error) throw error;
 
-    const { error: errorCheckout } = await client
-      .from("checkout")
-      .update({
-        status: true,
-        updated_at: new Date(),
-      })
-      .eq("id", orderId)
-      .select();
+    try {
+      const cartItems = cart?.map((c: any) => ({
+        name: c.name,
+        description: c.size,
+        value: c.price,
+        quantity: c.quantity,
+        length: 30,
+        width: 25,
+        height: 10,
+        weight: 1000,
+      }));
 
-    if (errorCheckout) throw errorCheckout;
+      const response = await fetch("/api/biteship/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          origin_contact_name: userData?.name,
+          origin_contact_phone: userData?.phone,
+          origin_address: userData?.address,
+          origin_postal_code: userData?.postal,
+          destination_contact_name: shipping?.[0]?.name,
+          destination_contact_phone: shipping?.[0]?.phone,
+          destination_address: shipping?.[0]?.address,
+          destination_postal_code: Number(shipping?.[0]?.postal),
+          courier_company: shipping?.[0]?.company,
+          courier_type: shipping?.[0]?.service,
+          delivery_type: "now",
+          items: cartItems,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Order Success:", data);
+      } else {
+        console.error("Error:", data.error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   useEffect(() => {
     updateProductData();
+    createOrder();
+
     localStorage.removeItem("cart");
+    localStorage.removeItem("shipping");
   }, []);
 
   return (

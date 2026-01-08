@@ -53,6 +53,13 @@ export default function Checkout() {
       setPostalError(ship?.postal ? false : true);
       setShippingError(ship?.postal ? false : true);
 
+      const { data: userData, error } = await client
+        .from("profile")
+        .select("*")
+        .eq("name", "Admin")
+        .single();
+      if (error) throw error;
+
       try {
         const cartItems = carts?.map((c) => ({
           name: c.name,
@@ -71,8 +78,7 @@ export default function Checkout() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            origin_postal_code:
-              process.env.NEXT_PUBLIC_BITESHIP_SELLER_POSTAL_CODE,
+            origin_postal_code: userData?.postal,
             destination_postal_code: Number(ship?.postal),
             couriers: process.env.NEXT_PUBLIC_BITESHIP_COURIER_AVAILABLE,
             items: cartItems,
@@ -132,19 +138,33 @@ export default function Checkout() {
       setPhoneError(ship?.phone ? false : true);
       setAddressError(ship?.address ? false : true);
       setPostalError(ship?.postal ? false : true);
-      setShippingError(ship?.postal ? false : true);
+      setShippingError(ship?.courier != 0 ? false : true);
+
+      const shipping = JSON.parse(localStorage.getItem("shipping") || "[]");
+
+      const newShipping = {
+        name: ship?.name,
+        phone: ship?.phone,
+        address: ship?.address,
+        postal: ship?.postal,
+        company: ship?.company,
+        service: ship?.service,
+      };
+
+      shipping.push(newShipping);
+      localStorage.setItem("shipping", JSON.stringify(shipping));
 
       try {
         const { data, error } = await client
           .from("checkout")
-          .insert({ total: totals, status: false })
+          .insert({ total: ongkir, status: false })
           .select();
 
         if (error) throw error;
 
         const response = await fetch("/api/midtrans", {
           method: "POST",
-          body: JSON.stringify({ id: data?.[0]?.id, total: totals }),
+          body: JSON.stringify({ id: data?.[0]?.id, total: ongkir }),
         });
 
         const requestData = await response.json();
