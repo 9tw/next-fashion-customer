@@ -47,6 +47,11 @@ export default function Menu() {
               Privé
             </a>
           </li>
+          <li className="menu-item">
+            <a href="/tracking" className="item-anchor">
+              Tracking
+            </a>
+          </li>
         </ul>
       </div>
     </div>
