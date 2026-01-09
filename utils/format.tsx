@@ -50,3 +50,11 @@ export const SafeHTML = ({ html, className }: SafeHTMLProps) => {
 export const formatPrice = (price: number) => {
   return price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
+
+export const formatDate = (dateStr: string) => {
+  return new Date(dateStr).toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+};

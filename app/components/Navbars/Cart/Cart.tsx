@@ -216,7 +216,7 @@ export default function Cart() {
           </li> */}
           <li className="list-group-item d-flex justify-content-between">
             <span>Total</span>
-            <strong> Rp. {formatPrice(totals)},-</strong>
+            <strong>Rp. {formatPrice(totals)},-</strong>
           </li>
         </ul>
         <button

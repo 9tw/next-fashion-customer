@@ -1,12 +1,12 @@
 import Navbar from "../components/Navbars/Navbar";
 import Footer from "../components/Footer/Footer";
-import Thank from "../components/Thank/Thank";
+import Purchase from "../components/Purchase/Purchase";
 
-export default function Purchase() {
+export default function History() {
   return (
     <>
       <Navbar />
-      <Thank />
+      <Purchase />
       <Footer />
     </>
   );
